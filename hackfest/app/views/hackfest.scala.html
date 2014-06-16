@@ -1,0 +1,9 @@
+@(temas: List[Tema])
+
+@for(tema <- temas) {
+	<ul> @tema.tema
+		@for(evento <- tema.eventos) {
+			<li>@evento.titulo</li>
+		}
+	</ul>
+}
