@@ -1,0 +1,19 @@
+@(eventos: List[Evento], temaName: String)
+<head>
+	<meta charset='utf-8'>
+</head>
+O sistema blablablablabalbalbla blabal bla bla balb alba alah! alah!
+@for(evento <- eventos) {
+	<ul><li>@evento.titulo: Interessados @evento.interessados.size()<br>
+		@for(tema <- evento.temas) {
+			#@tema.tema
+		}
+		<form action="/reservar/@evento.id" method="POST">
+			<input type="hidden" name='tema' value='@temaName' />
+			<input type="text" name="nome" placeholder="Fulano de Tal">
+			<input type="email" name="email" placeholder="contato@@exemplo.com">
+			<input type="submit" value="Reservar">
+		</form>
+		</li>
+	</ul>
+}

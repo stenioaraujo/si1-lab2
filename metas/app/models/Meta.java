@@ -45,6 +45,14 @@ public class Meta extends Model {
 		find.ref(id).delete();
 	}
 	
+	public static void complete(long id) {
+		Meta meta = find.byId(id);
+		if (meta != null) {
+			meta.setComplete(true);
+			save(meta);
+		}
+	}
+	
 	public static List<Meta> all() {
 		return find.orderBy("priority").findList();
 	}

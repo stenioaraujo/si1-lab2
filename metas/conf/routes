@@ -5,6 +5,7 @@
 # Home page
 GET     /                           controllers.Application.index()
 POST	/save						controllers.Application.save()
+POST	/complete/:id				controllers.Application.complete(id: Long)
 POST	/remove/:id					controllers.Application.remove(id: Long)
 
 # Map static resources from the /public folder to the /assets URL path

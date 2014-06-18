@@ -34,7 +34,23 @@ public class Tema extends Model {
 		return find.all();
 	}
 	
+	public static Tema getById(String tema) {
+		return find.byId(tema);
+	}
+	
 	public static void save(Tema tema) {
 		tema.save();
+	}
+
+	public List<Evento> getEventos() {
+		Collections.sort(eventos, new Comparator<Evento>() {
+			@Override
+			public int compare(Evento arg0, Evento arg1) {
+				int ord = arg1.interessados.size() - arg0.interessados.size();
+				return  ord == 0 ? arg0.date.compareTo(arg1.date) : ord;
+			}			
+		});
+		
+		return eventos;
 	}
 }

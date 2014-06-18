@@ -22,8 +22,6 @@ public class Application extends Controller {
     	Form<Week> formWeek = formBindWeek.bindFromRequest();
     	Form<Meta> formMeta = formBindMeta.bindFromRequest();
     	
-    	System.out.println(formWeek.errorsAsJson() + "" + formMeta.errorsAsJson());
-    	
     	if (!formWeek.hasErrors() && !formMeta.hasErrors()) {
     		Week week = formWeek.get();
     		Meta meta = formMeta.get();
@@ -40,6 +38,12 @@ public class Application extends Controller {
     
     public static Result remove(long id) {
     	Meta.remove(id);
+    	
+    	return redirect(routes.Application.index());
+    }
+    
+    public static Result complete(long id) {
+    	Meta.complete(id);
     	
     	return redirect(routes.Application.index());
     }

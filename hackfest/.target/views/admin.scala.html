@@ -1,0 +1,10 @@
+@(temas: List[Tema])
+<h1>Cadastro de evento</h1>
+<form action="/admin/cadastrar">
+	<input type="text" name="titulo" placeholder="Título">
+	<input type="date" name="date"/>
+	<input type="text" name="descricao" />
+	@for(tema <- temas) {
+		<label><input type="checkbox" name="temas" value="@tema.tema" />@tema.tema</label>
+	}
+</form>

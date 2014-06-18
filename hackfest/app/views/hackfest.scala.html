@@ -1,9 +1,55 @@
-@(temas: List[Tema])
-
-@for(tema <- temas) {
-	<ul> @tema.tema
-		@for(evento <- tema.eventos) {
-			<li>@evento.titulo</li>
-		}
-	</ul>
-}
+@(temas: List[Tema], eventos: List[Evento], temaName: String)
+<html>
+	<head>
+        <meta charset = 'utf-8' />
+        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="assets/css/bootstrap-theme.min.css">
+        <script src="assets/js/bootstrap.js"></script>
+        <title>Metas</title>
+    </head>
+	<body>
+        <div class="jumbotron">
+            <div class="container">
+                <h1>Hackfest - <a href="/admin">Admin</a></h1>
+                <p>Tenha a mão os maiores eventos na área Hacker e afins</p>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Temas
+            </div>
+            <div class="panel-body">
+            	<a href="?tema=all">#all</a> 
+            	@for(tema <- temas) {
+                <a href="?tema=@tema.tema">#@tema.tema</a> 
+                }
+            </div>
+        </div>
+        <div class="container">
+            <h1 style="text-align: center">#@temaName</h1>
+            <ul class="list-group">
+            	@for(evento <- eventos) {
+                <li class="list-group-item">
+                    <p>Titulo: @evento.titulo, Confirmaram presença: @evento.interessados.size()</p>
+                    <p>Data: @evento.date</p>
+                    <p>
+                    	Temas: 
+						@for(tema <- temas) {
+							<a href="?tema=@tema.tema">#@tema.tema</a> 
+						}
+					</p>
+                    <p>Confirmar presença</p>
+                    <form class="form-inline" action="/reservar/@evento.id" method="POST">
+                        <div class="form-group">
+							<input type="hidden" name='tema' value='@temaName' />
+                            <label>Nome <input type="text" class='form-control' name='nome' placeholder="Nome"/></label>
+                            <label>Email <input type="email" class='form-control' name="email" placeholder="Email" /></label>
+                            <input type="submit" class="btn btn-default" value="confirmar"/>
+                        </div>
+                    </form>
+                </li>
+                }
+            </ul>
+        </div>
+    </body>
+</html>

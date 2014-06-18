@@ -1,0 +1,49 @@
+@(temas: List[Tema], msg: String)
+<html>
+	<head>
+        <meta charset = 'utf-8' />
+        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="assets/css/bootstrap-theme.min.css">
+        <script src="assets/js/bootstrap.js"></script>
+        <title>Metas</title>
+        <style type="text/css">
+        </style>
+    </head>
+	<body>
+        <div class="jumbotron">
+            <div class="container">
+                <h1><a href="/">Hackfest</a> - Admin</h1>
+                <p>Cadastro de evento</p>
+            </div>
+        </div>
+        <div class="container">
+        	<h1>@msg</h1>
+            <form class="form-horizontal" action="/admin/cadastrar" method="POST">
+                <div class="form-group">
+                    <label for="titulo">Título: </label>
+                    <input id="titulo" type="text" name="titulo" class="form-control" placeholder="Título"/>
+                    
+                    <label for="date">Date: </label>
+                    <input id="date" type="date" name="date" class="form-control"/>
+                    
+                    <label for="descricao">Descrição</label>
+                    <textarea name="descricao" id="descricao" class="form-control" rows="5"></textarea>
+                </div>
+                <div class="form-group">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Temas</div>
+                        <div class="panel-body">
+                        	@for(tema <- temas) {
+                            <label class='checkbox-inline'>
+                                <input type="checkbox" name="temas[]" value="@tema.tema"/> @tema.tema
+                            </label>
+                            }
+                        </div>
+                    </div>
+                    
+                    <input type="submit" class="form-control" value="Cadastrar">
+                </div>
+            </form>
+        </div>
+    </body>
+</html>

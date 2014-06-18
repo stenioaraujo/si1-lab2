@@ -15,7 +15,8 @@ public class Evento extends Model {
 	@GeneratedValue
 	public long id;
 	
-	public Map<String, String> interessados = new HashMap<String, String>();
+	@OneToMany(cascade = CascadeType.ALL)
+	public Set<Interessado> interessados = new HashSet<Interessado>();
 	
 	@Required
 	@ManyToMany(cascade = CascadeType.ALL)
@@ -41,6 +42,7 @@ public class Evento extends Model {
 	
 	public void addTema(Tema tema) {
 		if(tema != null) {
+			tema = Tema.getById(tema.tema) != null ? Tema.getById(tema.tema) : tema;
 			tema.addEvento(this);
 			temas.add(tema);
 		}
@@ -52,8 +54,29 @@ public class Evento extends Model {
 		}
 	}
 	
+	
+	public void addInteressado(Interessado interessado) {
+		if (interessado != null) {
+			this.interessados.add(interessado);
+		}
+	}
+	
+	public static Evento getById(long id) {
+		return find.ref(id);
+	}
+	
 	public static List<Evento> all() {
-		return find.all();
+		List<Evento> eventos = find.all();
+		
+		Collections.sort(eventos, new Comparator<Evento>() {
+			@Override
+			public int compare(Evento o1, Evento o2) {
+				int ord = o2.interessados.size() - o1.interessados.size();
+				return  ord == 0 ? o1.date.compareTo(o2.date) : ord;
+			}
+		});
+		
+		return eventos;
 	}
 	
 	public static void save(Evento evento) {

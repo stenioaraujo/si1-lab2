@@ -11,6 +11,14 @@ create table evento (
   constraint pk_evento primary key (id))
 ;
 
+create table interessado (
+  id                        bigint not null,
+  evento_id                 bigint not null,
+  nome                      varchar(255),
+  email                     varchar(255),
+  constraint pk_interessado primary key (id))
+;
+
 create table tema (
   tema                      varchar(255) not null,
   constraint pk_tema primary key (tema))
@@ -30,8 +38,12 @@ create table tema_evento (
 ;
 create sequence evento_seq;
 
+create sequence interessado_seq;
+
 create sequence tema_seq;
 
+alter table interessado add constraint fk_interessado_evento_1 foreign key (evento_id) references evento (id) on delete restrict on update restrict;
+create index ix_interessado_evento_1 on interessado (evento_id);
 
 
 
@@ -51,6 +63,8 @@ drop table if exists evento;
 
 drop table if exists evento_tema;
 
+drop table if exists interessado;
+
 drop table if exists tema;
 
 drop table if exists tema_evento;
@@ -58,6 +72,8 @@ drop table if exists tema_evento;
 SET REFERENTIAL_INTEGRITY TRUE;
 
 drop sequence if exists evento_seq;
+
+drop sequence if exists interessado_seq;
 
 drop sequence if exists tema_seq;
 

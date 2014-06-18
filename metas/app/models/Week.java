@@ -47,7 +47,7 @@ public class Week extends Model {
 	}
 	
 	public static Week getById(Long id) {
-		return find.ref(id);
+		return find.byId(id);
 	}
 	
 	public static List<Week> all() {
