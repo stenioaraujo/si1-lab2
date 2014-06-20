@@ -61,6 +61,6 @@ public class Application extends Controller {
     
     public static Result admin(String msg) {
     	return ok(admin.render(Tema.all(), msg));
-    
+    }
 
 }
