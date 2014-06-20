@@ -14,8 +14,6 @@ public class Application extends Controller {
 	static Form<Evento> formEvento = Form.form(Evento.class);
 	
     public static Result index(String tema) {
-    	inicializaDB();
-    	
     	Tema temaSearch = Tema.getById(tema);
     	if (temaSearch != null && !tema.equals("all")) {
     		return ok(hackfest.render(Tema.all(), temaSearch.getEventos(), tema));
@@ -63,41 +61,6 @@ public class Application extends Controller {
     
     public static Result admin(String msg) {
     	return ok(admin.render(Tema.all(), msg));
-    }
     
-    private static void inicializaDB() {
-    	if (Evento.all().size() == 0) {
-    		String[] nomesTemas = new String[]{"hacker", "si", "pokemon", "tubarao", "mimimi"};
-    		
-    		List<Tema> temas = new ArrayList<Tema>();
-    		for (String tema: nomesTemas) {
-    			temas.add(new Tema(tema));
-    		}
-    		
-    		String descricao = "blablabla";
-    		String date = "2014-06-17";
-    		String[] titulos = new String[]{"Coisa linda", "De se ver", "Eh Voce", "meu bem querer", "Evento fantastico", "sem muito conteudo", "desculpem", "nao queria que fosse assim", "nove", "10"};
-    		for (int i = 0; i < titulos.length; i++) {
-    			ArrayList<Tema> temaParaEvento = new ArrayList<Tema>();
-    			temaParaEvento.add(temas.get(i%temas.size()));
-    			temaParaEvento.add(temas.get((i+1)%temas.size()));
-    			
-    			Evento evento = new Evento(titulos[i], descricao, date, temaParaEvento);
-    			if (i < 3) {
-    				for (int k = 0; k < 6; k++) {
-    					evento.addInteressado(new Interessado(k+"email@email.com", "Email"));
-    				}
-    			}
-    			if (i == 2) {
-    				for (int k = 0; k < 2; k++) {
-    					evento.addInteressado(new Interessado((k+50)+"email@email.com", "Email"));;
-    				}
-    			}
-    			
-    			Evento.save(evento);
-    		}
-    		
-    	}
-    }
 
 }

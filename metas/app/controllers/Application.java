@@ -14,7 +14,6 @@ public class Application extends Controller {
 	static Form<Meta> formBindMeta = Form.form(Meta.class);
 	
     public static Result index() {
-    	initializeDBwithDefaultValues();
         return ok(views.html.meta.render(Week.all()));
     }
     
@@ -47,25 +46,4 @@ public class Application extends Controller {
     	
     	return redirect(routes.Application.index());
     }
-
-    /**
-     * Preencher as três primeiras semanas com 10 metas
-     */
-	private static void initializeDBwithDefaultValues() {
-		if (Week.all().size() == 0) {
-    		String[] metas = new String[]{"Terminar lab 2", "Aprender html", "Aprender Scala", "Aprender play", "Aprender REST", "Aprender reflexão", "Aprender a aprender", "Aprender a dançar kizomba", "Ir pro pp mais vezes", "Tomar juízo"};
-    		
-    		List<List<Meta>> semanas = new ArrayList<List<Meta>>();
-    		for (int i = 0; i < 6; i++) semanas.add(new ArrayList<Meta>());
-    		
-    		for (int j = 0, i = 0; j < metas.length; j++, i++) {
-    			semanas.get(i % 3).add(new Meta(metas[j], j%5 + 1));
-    		}
-    		
-    		for (long k = 1; k <= 6; k++) {
-    			Week week = new Week(semanas.get((int)k-1), k);
-    			Week.save(week);
-    		}
-    	}
-	}
 }
